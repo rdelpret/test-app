@@ -24,6 +24,7 @@ spec:
   minReadySeconds: 3
   progressDeadlineSeconds: 60
   revisionHistoryLimit: 5
+  replicas: 2
   selector:
     matchLabels:
       app: podinfo
@@ -96,22 +97,4 @@ spec:
       volumes:
       - emptyDir: {}
         name: data
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: podinfo
-spec:
-  maxReplicas: 4
-  metrics:
-  - resource:
-      name: cpu
-      target:
-        averageUtilization: 99
-        type: Utilization
-    type: Resource
-  minReplicas: 2
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: podinfo
+
